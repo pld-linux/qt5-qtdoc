@@ -14,6 +14,9 @@ URL:		http://qt-project.org/
 BuildRequires:	qt5-qtbase-devel = %{version}
 BuildRequires:	qt5-qttools-devel = %{version}
 BuildRequires:	rpmbuild(macros) >= 1.654
+BuildRequires:	tar >= 1:1.22
+BuildRequires:	xz
+BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_noautoreqdep	libGL.so.1 libGLU.so.1

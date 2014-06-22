@@ -1,5 +1,4 @@
-# TODO:
-# - cleanup
+# TODO: qtdemo? (LGPL v2.1+exception/GPL v3 licensed)
 #
 # Conditional build:
 %bcond_without	qch	# documentation in QCH format
@@ -10,12 +9,12 @@
 Summary:	The Qt5 qtdoc documentation module
 Summary(pl.UTF-8):	Moduł dokumentacji Qt5 qtdoc
 Name:		qt5-%{orgname}
-Version:	5.2.0
-Release:	0.1
-License:	LGPL v2.1 or GPL v3.0
+Version:	5.3.0
+Release:	1
+License:	FDL v1.3
 Group:		Documentation
-Source0:	http://download.qt-project.org/official_releases/qt/5.2/%{version}/submodules/%{orgname}-opensource-src-%{version}.tar.xz
-# Source0-md5:	76936bc86bb0b58cc340c5b9e4a24308
+Source0:	http://download.qt-project.org/official_releases/qt/5.3/%{version}/submodules/%{orgname}-opensource-src-%{version}.tar.xz
+# Source0-md5:	38787fc8cd52d6734b63b24afde4cae4
 URL:		http://qt-project.org/
 %if %{with qch}
 BuildRequires:	qt5-assistant >= %{qttools_ver}
@@ -71,6 +70,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
+%doc README dist/changes-*
 %{_docdir}/qt5-doc/qtdoc
 
 %if %{with qch}

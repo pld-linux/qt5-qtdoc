@@ -1,35 +1,55 @@
 # TODO:
 # - cleanup
+#
+# Conditional build:
+%bcond_without	qch	# documentation in QCH format
 
 %define		orgname		qtdoc
-Summary:	The Qt5 Qtdoc
+%define		qtbase_ver	%{version}
+%define		qttools_ver	%{version}
+Summary:	The Qt5 qtdoc documentation module
+Summary(pl.UTF-8):	Moduł dokumentacji Qt5 qtdoc
 Name:		qt5-%{orgname}
 Version:	5.2.0
 Release:	0.1
 License:	LGPL v2.1 or GPL v3.0
-Group:		X11/Libraries
+Group:		Documentation
 Source0:	http://download.qt-project.org/official_releases/qt/5.2/%{version}/submodules/%{orgname}-opensource-src-%{version}.tar.xz
 # Source0-md5:	76936bc86bb0b58cc340c5b9e4a24308
 URL:		http://qt-project.org/
-BuildRequires:	qt5-qtbase-devel = %{version}
-BuildRequires:	qt5-qttools-devel = %{version}
+%if %{with qch}
+BuildRequires:	qt5-assistant >= %{qttools_ver}
+%endif
+BuildRequires:	qt5-build >= %{qtbase_ver}
+BuildRequires:	qt5-qmake >= %{qtbase_ver}
 BuildRequires:	rpmbuild(macros) >= 1.654
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
+Requires:	qt5-doc-common >= %{qtbase_ver}
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define		_noautoreqdep	libGL.so.1 libGLU.so.1
-%define		_noautostrip	'.*_debug\\.so*'
-
-%define		specflags	-fno-strict-aliasing
-%define		_qtdir		%{_libdir}/qt5
-
 %description
-qtdoc contains the main Qt Reference Documentation, which includes
-overviews, Qt topics, and examples not specific to any Qt module.The
-configuration files are located in qtdoc/doc/config and the articles
-in qtdoc/doc/src. Note that QDoc is located in qtbase.
+Qt5 qtdoc package contains the main Qt Reference Documentation, which
+includes overviews, Qt topics, and examples not specific to any Qt
+module.
+
+%description -l pl.UTF-8
+Pakiet Qt5 qtdoc zawiera podstawową część dokumentacji referencyjnej
+Qt, obejmującą artykuły przeglądowe, tematy związane z Qt oraz
+przykłady niespecyficzne dla żadnego modułu Qt.
+
+%package qch
+Summary:	The Qt5 qtdoc documentation module - QCH format
+Summary(pl.UTF-8):	Moduł dokumentacji Qt5 qtdoc - w formacie QCH
+Group:		Documentation
+Requires:	qt5-doc-common >= %{qtbase_ver}
+
+%description qch
+The Qt5 qtdoc documentation module - QCH format.
+
+%description qch -l pl.UTF-8
+Moduł dokumentacji Qt5 qtdoc - w formacie QCH.
 
 %prep
 %setup -q -n %{orgname}-opensource-src-%{version}
@@ -37,18 +57,24 @@ in qtdoc/doc/src. Note that QDoc is located in qtbase.
 %build
 qmake-qt5
 %{__make}
-%{__make} docs
+%{__make} %{!?with_qch:html_}docs
 
 %install
 rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	INSTALL_ROOT=$RPM_BUILD_ROOT
 
-%{__make} install_docs \
+%{__make} install_%{!?with_qch:html_}docs \
 	INSTALL_ROOT=$RPM_BUILD_ROOT
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%{_docdir}/qt5-doc
+%{_docdir}/qt5-doc/qtdoc
+
+%if %{with qch}
+%files qch
+%defattr(644,root,root,755)
+%{_docdir}/qt5-doc/qtdoc.qch
+%endif

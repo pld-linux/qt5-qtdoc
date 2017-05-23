@@ -1,8 +1,5 @@
 # TODO: qtdemo? (LGPL v2.1+exception/GPL v3 licensed)
 #
-# Conditional build:
-%bcond_without	qch	# documentation in QCH format
-
 %define		orgname		qtdoc
 %define		qtbase_ver	%{version}
 %define		qttools_ver	%{version}
@@ -16,9 +13,7 @@ Group:		Documentation
 Source0:	http://download.qt.io/official_releases/qt/5.8/%{version}/submodules/%{orgname}-opensource-src-%{version}.tar.xz
 # Source0-md5:	6e1458414a3fed676c3bbae43c828b92
 URL:		http://www.qt.io/
-%if %{with qch}
 BuildRequires:	qt5-assistant >= %{qttools_ver}
-%endif
 BuildRequires:	qt5-build >= %{qtbase_ver}
 BuildRequires:	qt5-qmake >= %{qtbase_ver}
 BuildRequires:	rpmbuild(macros) >= 1.654
@@ -56,15 +51,16 @@ Moduł dokumentacji Qt5 qtdoc - w formacie QCH.
 %build
 qmake-qt5
 %{__make}
-%{__make} %{!?with_qch:html_}docs
+%{__make} docs
 
 %install
 rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	INSTALL_ROOT=$RPM_BUILD_ROOT
 
-%{__make} install_%{!?with_qch:html_}docs \
+%{__make} install_docs \
 	INSTALL_ROOT=$RPM_BUILD_ROOT
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -73,8 +69,6 @@ rm -rf $RPM_BUILD_ROOT
 %doc README dist/changes-*
 %{_docdir}/qt5-doc/qtdoc
 
-%if %{with qch}
 %files qch
 %defattr(644,root,root,755)
 %{_docdir}/qt5-doc/qtdoc.qch
-%endif

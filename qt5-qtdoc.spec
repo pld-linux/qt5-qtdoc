@@ -7,7 +7,7 @@ Summary:	The Qt5 qtdoc documentation module
 Summary(pl.UTF-8):	Moduł dokumentacji Qt5 qtdoc
 Name:		qt5-%{orgname}
 Version:	5.15.2
-Release:	1
+Release:	2
 License:	FDL v1.3
 Group:		Documentation
 Source0:	http://download.qt.io/official_releases/qt/5.15/%{version}/submodules/%{orgname}-everywhere-src-%{version}.tar.xz

@@ -14,7 +14,7 @@ URL:		https://www.qt.io/
 BuildRequires:	qt5-assistant >= %{qttools_ver}
 BuildRequires:	qt5-build >= %{qtbase_ver}
 BuildRequires:	qt5-qmake >= %{qtbase_ver}
-BuildRequires:	rpmbuild(macros) >= 1.654
+BuildRequires:	rpmbuild(macros) >= 2.016
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
 Requires:	qt5-doc-common >= %{qtbase_ver}
@@ -59,7 +59,7 @@ Moduł dokumentacji Qt5 qtdoc - programy demonstracyjne.
 %setup -q -n %{orgname}-everywhere-src-%{version}
 
 %build
-qmake-qt5
+%{qmake_qt5}
 %{__make}
 %{__make} docs
 

@@ -8,7 +8,7 @@ Version:	5.15.4
 Release:	1
 License:	FDL v1.3
 Group:		Documentation
-Source0:	http://download.qt.io/official_releases/qt/5.15/%{version}/submodules/%{orgname}-everywhere-opensource-src-%{version}.tar.xz
+Source0:	https://download.qt.io/official_releases/qt/5.15/%{version}/submodules/%{orgname}-everywhere-opensource-src-%{version}.tar.xz
 # Source0-md5:	9b2a0f291a9c61c3e5a90de38ebd24ad
 URL:		https://www.qt.io/
 BuildRequires:	qt5-assistant >= %{qttools_ver}
